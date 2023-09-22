@@ -2,12 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\TweetController;
-
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\BadController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\SearchController;
 
 
 /*
@@ -21,6 +20,10 @@ use App\Http\Controllers\FollowController;
 |
 */
 Route::middleware('auth')->group(function () {
+    Route::get('/tweet/search/input', [SearchController::class, 'create'])->name('search.input');
+    Route::get('/tweet/search/result', [SearchController::class, 'index'])->name('search.result');
+    Route::get('/tweet/timeline', [TweetController::class, 'timeline'])->name('tweet.timeline');
+    Route::get('user/{user}', [FollowController::class, 'show'])->name('follow.show');
     Route::post('user/{user}/follow', [FollowController::class, 'store'])->name('follow');
     Route::post('user/{user}/unfollow', [FollowController::class, 'destroy'])->name('unfollow');
     Route::post('tweet/{tweet}/favorites', [FavoriteController::class, 'store'])->name('favorites');
@@ -45,4 +48,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
