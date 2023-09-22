@@ -20,7 +20,7 @@ class TweetController extends Controller
     {
         //
         $tweets = Tweet::getAllOrderByUpdated_at();
-        return response()->view('tweet.index',compact('tweets'));
+        return response()->view('tweet.index', compact('tweets'));
     }
 
     /**
@@ -45,15 +45,15 @@ class TweetController extends Controller
         // バリデーション:エラー
         if ($validator->fails()) {
             return redirect()
-            ->route('tweet.create')
-            ->withInput()
-            ->withErrors($validator);
+                ->route('tweet.create')
+                ->withInput()
+                ->withErrors($validator);
         }
         // create()は最初から用意されている関数
         // 戻り値は挿入されたレコードの情報
         $data = $request->merge(['user_id' => Auth::user()->id])->all();
         $result = Tweet::create($data);
-        
+
         // ルーティング「todo.index」にリクエスト送信（一覧ページに移動）
         return redirect()->route('tweet.index');
     }
@@ -92,9 +92,9 @@ class TweetController extends Controller
         //バリデーション:エラー
         if ($validator->fails()) {
             return redirect()
-            ->route('tweet.edit', $id)
-            ->withInput()
-            ->withErrors($validator);
+                ->route('tweet.edit', $id)
+                ->withInput()
+                ->withErrors($validator);
         }
         //データ更新処理
         $result = Tweet::find($id)->update($request->all());
@@ -110,15 +110,27 @@ class TweetController extends Controller
         $result = Tweet::find($id)->delete();
         return redirect()->route('tweet.index');
     }
-    
+
     public function mydata()
     {
         // Userモデルに定義したリレーションを使用してデータを取得する．
         $tweets = User::query()
-        ->find(Auth::user()->id)
-        ->userTweets()
-        ->orderBy('created_at','desc')
-        ->get();
+            ->find(Auth::user()->id)
+            ->userTweets()
+            ->orderBy('created_at', 'desc')
+            ->get();
         return response()->view('tweet.index', compact('tweets'));
+    }
+    public function timeline()
+    {
+        // フォローしているユーザを取得する
+        $followings = User::find(Auth::id())->followings->pluck('id')->all();
+        // 自分とフォローしている人が投稿したツイートを取得する
+        $tweets = Tweet::query()
+            ->where('user_id', Auth::id())
+            ->orWhereIn('user_id', $followings)
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        return view('tweet.index', compact('tweets'));
     }
 }
