@@ -26,7 +26,7 @@
                     </div>
                     <div id="map" style="height:500px"></div>
                     <script src="{{ asset('/result.js') }}"></script>
-                    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDjUgcBBuXnzbe2MFR9dtWABgO4O3NPKLo&callback=initMap" async defer>
+                    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{ config('services.google_maps.api_key') }}&callback=initMap" async defer>
                     </script>
                 </div>
             </div>
