@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Dashboard (Location)') }}
         </h2>
     </x-slot>
 
@@ -27,7 +27,7 @@
                     </div>
                     <div id="map" style="height:500px"></div>
                     <script src="{{ asset('/result.js') }}"></script>
-                    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyDjUgcBBuXnzbe2MFR9dtWABgO4O3NPKLo&callback=initMap" async defer>
+                    <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{ config('services.google_maps.api_key') }}&callback=initMap" async defer>
                     </script>
                 </div>
             </div>

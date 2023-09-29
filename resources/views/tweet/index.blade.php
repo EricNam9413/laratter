@@ -58,40 +58,13 @@
                   <a href="{{ route('tweet.show',$tweet->id) }}">
                     <h3 class="text-left font-bold text-lg text-gray-800 dark:text-gray-200">{{$tweet->tweet}}</h3>
                   </a>
-                  <!-- 🔽 詳細画面へのリンク -->
+                  <!-- 🔽 詳細画面へのリンク
                   <a href="{{ route('tweet.show',$tweet->id) }}">
                     <p class="text-left text-gray-800 dark:text-gray-200">{{$tweet->user->name}}</p>
                     <h3 class="text-left font-bold text-lg text-gray-dark dark:text-gray-200">{{$tweet->tweet}}</h3>
-                  </a>
+                  </a> -->
 
                   <div class="flex">
-                    <!-- bad 状態で条件分岐 -->
-                    @if($tweet->users()->where('user_id', Auth::id())->exists())
-                    <!-- like ボタン -->
-                    <form action="{{ route('like',$tweet) }}" method="POST" class="text-left">
-                      @csrf
-                      <x-primary-button class="ml-3">
-                        <svg class="h-6 w-6 text-red-500" fill="none" stroke="red" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        {{ $tweet->users()->count() }}
-                      </x-primary-button>
-                    </form>
-                    @else
-                    <!-- bad ボタン -->
-                    <form action="{{ route('bad',$tweet) }}" method="POST" class="text-left">
-                      @csrf
-                      <x-primary-button class="ml-3">
-                        <svg class="h-6 w-6 text-red-500" fill="none" stroke="red" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        {{ $tweet->users()->count() }}
-                      </x-primary-button>
-                    </form>
-                    @endif
-
-
-
                     <!-- favorite 状態で条件分岐 -->
                     @if($tweet->users()->where('user_id', Auth::id())->exists())
                     <!-- unfavorite ボタン -->
@@ -116,6 +89,7 @@
                       </x-primary-button>
                     </form>
                     @endif
+
                     <!-- 🔽 条件分岐でログインしているユーザが投稿したtweetのみ編集ボタンと削除ボタンが表示される -->
                     @if ($tweet->user_id === Auth::user()->id)
                     <!-- 更新ボタン -->
@@ -138,6 +112,7 @@
                       </x-primary-button>
                     </form>
                     @endif
+
                   </div>
                 </td>
               </tr>
