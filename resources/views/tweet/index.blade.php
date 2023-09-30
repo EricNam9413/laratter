@@ -2,12 +2,8 @@
 
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      @if(Request::routeIs('tweet_mypage'))
-      {{ __('Mypage') }}
-      @else
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-200">
       {{ __('Tweet Index') }}
-      @endif
     </h2>
   </x-slot>
 
@@ -25,11 +21,12 @@
               @foreach ($tweets as $tweet)
               <tr class="hover:bg-gray-lighter">
                 <td class="py-4 px-6 border-b border-gray-light dark:border-gray-600">
-                  <!-- 🔽 ここから編集 --> 
                   <div class="flex">
+                    <!-- 🔽 編集 -->
                     <a href="{{ route('follow.show', $tweet->user->id) }}">
-                      <p class="text-left text-gray-800 dark:text-gray-200">{{$tweet->user->name}}</p>
+                      <p class="text-left text-gray-dark dark:text-gray-200">{{$tweet->user->name}}</p>
                     </a>
+                    <!-- 🔼 ここまで -->
                     <!-- follow 状態で条件分岐 -->
                     @if(Auth::user()->followings()->where('users.id', $tweet->user->id)->exists())
                     <!-- unfollow ボタン -->
@@ -58,7 +55,6 @@
                   <a href="{{ route('tweet.show',$tweet->id) }}">
                     <h3 class="text-left font-bold text-lg text-gray-800 dark:text-gray-200">{{$tweet->tweet}}</h3>
                   </a>
-
                   <div class="flex">
                     <!-- favorite 状態で条件分岐 -->
                     @if($tweet->users()->where('user_id', Auth::id())->exists())
@@ -84,14 +80,13 @@
                       </x-primary-button>
                     </form>
                     @endif
-
-                    <!-- 🔽 条件分岐でログインしているユーザが投稿したtweetのみ編集ボタンと削除ボタンが表示される -->
+                    <!-- 条件分岐でログインしているユーザが投稿したtweetのみ編集ボタンと削除ボタンが表示される -->
                     @if ($tweet->user_id === Auth::user()->id)
                     <!-- 更新ボタン -->
                     <form action="{{ route('tweet.edit',$tweet->id) }}" method="GET" class="text-left">
                       @csrf
                       <x-primary-button class="ml-3">
-                        <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
+                        <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="gray">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                       </x-primary-button>
@@ -101,13 +96,12 @@
                       @method('delete')
                       @csrf
                       <x-primary-button class="ml-3">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="blue">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="gray">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                       </x-primary-button>
                     </form>
                     @endif
-
                   </div>
                 </td>
               </tr>

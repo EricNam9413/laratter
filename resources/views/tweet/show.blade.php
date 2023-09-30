@@ -25,6 +25,12 @@
               </p>
             </div>
             <div class="flex flex-col mb-4">
+              <p class="mb-2 uppercase font-bold text-lg text-gray-800 dark:text-gray-200">area</p>
+              <p class="py-2 px-3 text-gray-800 dark:text-gray-200" id="area">
+                {{$tweet->area}}
+              </p>
+            </div>
+            <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-gray-800 dark:text-gray-200">created_at</p>
               <p class="py-2 px-3 text-gray-800 dark:text-gray-200" id="created_at">
                 {{$tweet->created_at}}
@@ -35,7 +41,6 @@
               <p class="py-2 px-3 text-gray-800 dark:text-gray-200" id="updated_at">
                 {{$tweet->updated_at}}
               </p>
-            </div>
             <div class="flex items-center justify-end mt-4">
             <a href="{{ url()->previous() }}">
               <x-secondary-button class="ml-3">
