@@ -1,8 +1,8 @@
 function initMap() {
-    // 맵을 그릴 요소
+    // Drawing map
     var mapElement = document.getElementById("map");
 
-    // Geolocation API를 사용하여 사용자의 현재 위치 가져옴
+    // Geolocation API and get user location
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {
             var userLocation = {
@@ -10,16 +10,15 @@ function initMap() {
                 lng: position.coords.longitude
             };
 
-            // 맵의 옵션을 설정
+            // Map option
             var mapOptions = {
-                zoom: 13, // 줌 레벨
-                center: userLocation // 맵의 중심을 사용자의 위치로 설정
+                zoom: 13, // level of zoom
+                center: userLocation // user center
             };
 
-            // 지도 인스턴스를 생성
             var map = new google.maps.Map(mapElement, mapOptions);
 
-            // 마커를 생성
+            // making marker
             var marker = new google.maps.Marker({
                 position: userLocation,
                 map: map,
