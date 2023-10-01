@@ -28,8 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::post('user/{user}/unfollow', [FollowController::class, 'destroy'])->name('unfollow');
     Route::post('tweet/{tweet}/favorites', [FavoriteController::class, 'store'])->name('favorites');
     Route::post('tweet/{tweet}/unfavorites', [FavoriteController::class, 'destroy'])->name('unfavorites');
-    Route::post('tweet/{tweet}/bad', [BadController::class, 'store'])->name('bad');
-    Route::post('tweet/{tweet}/like', [BadController::class, 'destroy'])->name('like');
     Route::get('/tweet/mypage', [TweetController::class, 'mydata'])->name('tweet.mypage');
     Route::resource('tweet', TweetController::class);
 });
